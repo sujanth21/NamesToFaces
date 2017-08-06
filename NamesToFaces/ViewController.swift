@@ -26,12 +26,23 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return 10
+        return people.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Person", for: indexPath) as! PersonCell
+        
+        let person = people[indexPath.row]
+        let path = getDocumentsDirectory().appendingPathComponent(person.image)
+        
+        cell.name.text = person.name
+        cell.imageView.image = UIImage(contentsOfFile: path.path)
+        
+        cell.imageView.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3).cgColor
+        cell.imageView.layer.borderWidth = 2
+        cell.imageView.layer.cornerRadius = 3
+        cell.layer.cornerRadius = 7
         
         return cell
     }
